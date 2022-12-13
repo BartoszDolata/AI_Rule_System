@@ -1,7 +1,14 @@
 def get_rules():
     RULE = [
         """
+        (defrule start
+          =>
+          (show "Welcome in Cartoons' System. We want to get an answer for a question:What 80s/90s cartoon should I watch?")
+          (assert (start)))
+        """,
+        """
         (defrule cartoon-finder_rule
+          (start)
           =>
           (bind ?answer (polar-question "A cartoon based on video game?"))
           (assert (based-on-game ?answer)))
@@ -772,5 +779,5 @@ def get_rules():
         =>
         (result "Mummies Alive, Skeleton Warriors"))
         """
-        ]
+    ]
     return RULE
