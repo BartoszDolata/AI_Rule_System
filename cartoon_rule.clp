@@ -1,19 +1,39 @@
+(defrule del
+?d <- (del)
+?d2 <- (list ?f $?rest)
+=>
+(retract ?d)
+(retract ?d2)
+(assert (list $?rest)))
+
 (defrule start
 =>
 (show "Welcome in Cartoons' System. We want to get an answer for a question:What 80s/90s cartoon should I watch?")
-(assert (start)))
+(assert (start))
+(assert (list))
+)
 
 (defrule cartoon-finder_rule
-(start)
+?f <- (start)
+?f2 <- (list)
 =>
 (bind ?answer (polar-question "A cartoon based on video game?"))
-(assert (based-on-game ?answer)))
+(assert (based-on-game ?answer))
+(retract ?f2)
+(assert (list ?f))
+(printc "Check")
+)
+
 
 (defrule nintendo_franchise_rule
-(based-on-game "Yes")
+?f <- (based-on-game "Yes")
+?f2 <- (list $?x)
 =>
 (bind ?answer (polar-question "A Nintendo fernichse?"))
-(assert (nintendo_fernichse ?answer)))
+(assert (nintendo_fernichse ?answer))
+(retract ?f2)
+(assert (list ?f $?x))
+)
 
 (defrule nintendo_fernichise_result
 (based-on-game "Yes")

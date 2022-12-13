@@ -13,7 +13,9 @@ def polar_question(text: str) -> str:
     # not working
     if event == "PREV":
         print("PREV")
-
+        env.assert_string("(del)")
+    for i in env.facts():
+        print(i)
     window.close()
 
     # If the User closes the window, we interpret it as No
@@ -43,12 +45,15 @@ def show(text: str):
     event, _ = window.read()
     window.close()
 
+def print_c(text: str):
+    print(text)
 
 def main():
 
     env.define_function(polar_question, name='polar-question')
     env.define_function(list_result, name='result')
     env.define_function(show, name="show")
+    env.define_function(print_c, name="printc")
     env.load("cartoon_rule.clp")
     # RULES = cartoon_rule.get_rules()
     # for rule in RULES:
