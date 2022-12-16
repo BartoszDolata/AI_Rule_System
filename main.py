@@ -3,26 +3,30 @@ import clips
 import cartoon_rule
 import re
 
+cid = 0
 env = clips.Environment()
-
-def polar_question(text: str) -> str:
+def polar_question(text: str):
     """A simple Yes/No question."""
-    layout = [[sg.Text(text)], [sg.Button("Yes"), sg.Button("No")], [sg.Button("PREV")]]
-    window = sg.Window("Cartoon finder", layout, size=(300, 100))
-    event, _ = window.read()
-    # not working
-    if event == "PREV":
-        print("PREV")
-        env.assert_string("(del)")
-    for i in env.facts():
-        print(i)
-    window.close()
+    param = text.split(";")
+    question = param[0]
+    fact = param[1]
+    num_of_ans = int(param[2])
+    answers = list()
+    for i in range(num_of_ans):
+        answers.append(str(param[3+i]))
 
-    # If the User closes the window, we interpret it as No
-    if event == sg.WIN_CLOSED:
-        return "No"
-    else:
-        return event
+    layout = [
+        [sg.Text(question)],
+        [sg.Radio(x,"Answer", key = x) for x in answers],
+        [sg.Button("NEXT")]]
+    window = sg.Window("Cartoon finder", layout, size=(300, 100))
+    event, values = window.read()
+    if event == "NEXT":
+        for i in answers:
+            if values[i]:
+                env.assert_string("("+fact+" "+ i +")")
+                print_c()
+    window.close()
 
 
 def list_result(text: str):
@@ -45,15 +49,23 @@ def show(text: str):
     event, _ = window.read()
     window.close()
 
-def print_c(text: str):
-    print(text)
+
+def print_c():
+    for i in env.facts():
+        print(i)
+    print("------")
+
+def check():
+    print("work")
 
 def main():
-
     env.define_function(polar_question, name='polar-question')
     env.define_function(list_result, name='result')
     env.define_function(show, name="show")
     env.define_function(print_c, name="printc")
+    env.define_function(check, name="check")
+
+
     env.load("cartoon_rule.clp")
     # RULES = cartoon_rule.get_rules()
     # for rule in RULES:
@@ -62,5 +74,5 @@ def main():
 
 
 if __name__ == '__main__':
-    print("Clips Version ", clips.__version__);
+    # print("Clips Version ", clips.__version__);
     main()
