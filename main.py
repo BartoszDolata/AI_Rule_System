@@ -1,8 +1,6 @@
 from typing import List
 import PySimpleGUI as sg
 import clips
-import cartoon_rule
-import re
 
 cid = 0
 env = clips.Environment()
