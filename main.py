@@ -1,3 +1,4 @@
+from typing import List
 import PySimpleGUI as sg
 import clips
 import cartoon_rule
@@ -5,22 +6,16 @@ import re
 
 cid = 0
 env = clips.Environment()
-def polar_question(text: str):
+def polar_question(question: str, fact: str, *answers: List):
     """A simple Yes/No question."""
-    param = text.split(";")
-    question = param[0]
-    fact = param[1]
-    num_of_ans = int(param[2])
-    answers = list()
-    for i in range(num_of_ans):
-        answers.append(str(param[3+i]))
-
     layout = [
         [sg.Text(question)],
         [sg.Radio(x,"Answer", key = x) for x in answers],
         [sg.Button("NEXT")]]
+
     window = sg.Window("Cartoon finder", layout, size=(300, 100))
     event, values = window.read()
+    
     if event == "NEXT":
         for i in answers:
             if values[i]:
@@ -29,10 +24,10 @@ def polar_question(text: str):
     window.close()
 
 
-def list_result(text: str):
+def list_result(*results: List[str]):
     layout = [
         [sg.Text("Result of your choices:")],
-        [sg.Listbox(values=re.split(r', ', text), enable_events=True, size=(50, 10), key="-FILE LIST-")],
+        [sg.Listbox(results, enable_events=True, size=(50, 10), key="-FILE LIST-")],
         [sg.Button("RESET")]]
     window = sg.Window("Cartoon finder", layout)
     event, _ = window.read()
