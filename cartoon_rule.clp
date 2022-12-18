@@ -11,22 +11,25 @@
 =>
 (show "Welcome in Cartoons' System. We want to get an answer for a question:What 80s/90s cartoon should I watch?")
 (assert (start))
+(assert (answers "Yes" "No"))
 
 )
 
 
 (defrule cartoon-finder_rule
 (start)
+(answers $?ans)
 =>
-(polar-question "A cartoon based on video game?" "based-on-game" "Yes" "No")
+(polar-question "A cartoon based on video game?" "based-on-game" $?ans)
 )
 
 
 
 (defrule nintendo_franchise_rule
 (based-on-game Yes)
+(answers $?ans)
 =>
-(polar-question "A Nintendo fernichse?" "nintendo_fernichse" "Yes" "No" "IDK")
+(polar-question "A Nintendo fernichse?" "nintendo_fernichse" $?ans)
 )
 
 
@@ -47,8 +50,9 @@
 
 (defrule celebrity_rule
 (based-on-game No)
+(answers $?ans)
 =>
-(polar-question "A celebrity?" "celebrity" "Yes" "No"))
+(polar-question "A celebrity?" "celebrity" $?ans))
 
 
 (defrule celebrity_result
@@ -60,15 +64,17 @@
 (defrule animal_furries_rule
 (based-on-game No)
 (celebrity No)
+(answers $?ans)
 =>
-(polar-question "Animal furries" "and the like?" "animal-furies" "Yes" "No"))
+(polar-question "Animal furries, and the like?" "animal-furies" $?ans))
 
 (defrule cats_rule
 (based-on-game No)
 (celebrity No)
 (animal-furies Yes)
+(answers $?ans)
 =>
-(polar-question "Cats?" "cats" "Yes" "No"))
+(polar-question "Cats?" "cats" $?ans))
 
 (defrule cats_result
 (based-on-game No)
@@ -83,8 +89,9 @@
 (celebrity No)
 (animal-furies Yes)
 (cats No)
+(answers $?ans)
 =>
- (polar-question "Rodents?" "rodents" "Yes" "No"))
+(polar-question "Rodents?" "rodents" $?ans))
 
 (defrule rodents_result
 (based-on-game No)
@@ -101,8 +108,9 @@
 (animal-furies Yes)
 (cats No)
 (rodents No)
+(answers $?ans)
 =>
-(polar-question "Dinosaurs?" "dinosaurs" "Yes" "No"))
+(polar-question "Dinosaurs?" "dinosaurs" $?ans))
 
 (defrule dinosaurs_result
 (based-on-game No)
@@ -121,8 +129,9 @@
 (cats No)
 (rodents No)
 (dinosaurs No)
+(answers $?ans)
 =>
- (polar-question "Ducks?" "ducks" "Yes" "No"))
+(polar-question "Ducks?" "ducks" $?ans))
 
 
 (defrule ducks_result
@@ -144,8 +153,9 @@
 (rodents No)
 (dinosaurs No)
 (ducks No)
+(answers $?ans)
 =>
-(polar-question "Bears?" "bears" "Yes" "No"))
+(polar-question "Bears?" "bears" $?ans))
 
 
 (defrule ducks_result
@@ -169,8 +179,9 @@
 (dinosaurs No)
 (ducks No)
 (bears No)
+(answers $?ans)
 =>
-(polar-question "Monkeys?" "monkeys" "Yes" "No"))
+(polar-question "Monkeys?" "monkeys" $?ans))
 
 
 (defrule monkeys_result
@@ -195,8 +206,9 @@
 (dinosaurs No)
 (ducks No)
 (monkeys No)
+(answers $?ans)
 =>
- (polar-question "Cows?" "cows" "Yes" "No"))
+(polar-question "Cows?" "cows" $?ans))
 
 (defrule cows_result
 (based-on-game No)
@@ -221,8 +233,9 @@
 (ducks No)
 (monkeys No)
 (cows No)
+(answers $?ans)
 =>
-(polar-question "Godless abominations?" "godless-ab" "Yes" "No"))
+(polar-question "Godless abominations?" "godless-ab" $?ans))
 
 
 (defrule godless_abominations_result_n
@@ -257,8 +270,9 @@
 (based-on-game No)
 (celebrity No)
 (animal-furies No)
+(answers $?ans)
 =>
- (polar-question "Do you dig giant robots?" "dig-robots" "Yes" "No"))
+(polar-question "Do you dig giant robots?" "dig-robots" $?ans))
 
 
 (defrule dig-robots_result
@@ -274,8 +288,9 @@
 (celebrity No)
 (animal-furies No)
 (dig-robots No)
+(answers $?ans)
 =>
- (polar-question "A cartoon based on a movie?" "movie-based" "Yes" "No"))
+(polar-question "A cartoon based on a movie?" "movie-based" $?ans))
 
 
 (defrule movie_rrated_rule
@@ -284,8 +299,9 @@
 (animal-furies No)
 (dig-robots No)
 (movie-based Yes)
+(answers $?ans)
 =>
- (polar-question "A R-rated movie?" "movie-r-rated" "Yes" "No"))
+(polar-question "A R-rated movie?" "movie-r-rated" $?ans))
 
 
 (defrule r_rated_result_no
@@ -314,8 +330,9 @@
 (animal-furies No)
 (dig-robots No)
 (movie-based No)
+(answers $?ans)
 =>
- (polar-question "Do you want a post-apocalyptic setting?" "post-apocaliptic" "Yes" "No"))
+(polar-question "Do you want a post-apocalyptic setting?" "post-apocaliptic" $?ans))
 
 (defrule post_apocaliptic_result
 (based-on-game No)
@@ -334,8 +351,9 @@
 (dig-robots No)
 (movie-based No)
 (post-apocaliptic No)
+(answers $?ans)
 =>
-(polar-question "Swords and sorcery?" "sword-sorcery" "Yes" "No"))
+(polar-question "Swords and sorcery?" "sword-sorcery" $?ans))
 
 
 (defrule sword_sorcery_result
@@ -357,8 +375,9 @@
 (movie-based No)
 (post-apocaliptic No)
 (sword-sorcery No)
+(answers $?ans)
 =>
-(polar-question "Military and law enforcement?" "military-law" "Yes" "No"))
+(polar-question "Military and law enforcement?" "military-law" $?ans))
 
 (defrule military_law_enforcement_result
 (based-on-game No)
@@ -381,8 +400,9 @@
 (post-apocaliptic No)
 (sword-sorcery No)
 (military-law No)
+(answers $?ans)
 =>
-(polar-question "Space?" "space" "Yes" "No"))
+(polar-question "Space?" "space" $?ans))
 
 
 
@@ -409,8 +429,9 @@
 (sword-sorcery No)
 (military-law No)
 (space No)
+(answers $?ans)
 =>
-(polar-question "Cowboys?" "cowboys" "Yes" "No"))
+(polar-question "Cowboys?" "cowboys" $?ans))
 
 
 (defrule cowboys_result
@@ -438,8 +459,9 @@
 (military-law No)
 (space No)
 (cowboys No)
+(answers $?ans)
 =>
- (polar-question "Do you want to understand what's going on?" "understand" "Yes" "No"))
+(polar-question "Do you want to understand what's going on?" "understand" $?ans))
 
 (defrule understand_rule_no
 (based-on-game No)
@@ -453,8 +475,9 @@
 (space No)
 (cowboys No)
 (understand No)
+(answers $?ans)
 =>
-(polar-question "In an awesome way?" "way" "Yes" "No"))
+(polar-question "In an awesome way?" "way" $?ans))
 
 
 (defrule understand_rule_yes
@@ -469,8 +492,9 @@
 (space No)
 (cowboys No)
 (understand Yes)
+(answers $?ans)
 =>
-(polar-question "Kids doing awesome stuff?" "kids-stuff" "Yes" "No"))
+(polar-question "Kids doing awesome stuff?" "kids-stuff" $?ans))
 
 
 (defrule way_result_no
@@ -516,8 +540,9 @@
 (cowboys No)
 (understand Yes)
 (kids-stuff Yes)
+(answers $?ans)
 =>
-(polar-question "In an educational manner?" "educational-manner" "Yes" "No"))
+(polar-question "In an educational manner?" "educational-manner" $?ans))
 
 (defrule kids_stuff_result_yes
 (based-on-game No)
@@ -566,8 +591,9 @@
 (cowboys No)
 (understand Yes)
 (kids-stuff No)
+(answers $?ans)
 =>
-(polar-question "Do you like computers" "computers" "Yes" "No"))
+(polar-question "Do you like computers" "computers" $?ans))
 
 
 (defrule computers_result
@@ -601,8 +627,9 @@
 (understand Yes)
 (kids-stuff No)
 (computers No)
+(answers $?ans)
 =>
-(polar-question "Something truly outrageous?" "outrageous" "Yes" "No"))
+(polar-question "Something truly outrageous?" "outrageous" $?ans))
 
 
 (defrule outrageous_result
@@ -638,8 +665,9 @@
 (kids-stuff No)
 (computers No)
 (outrageous No)
+(answers $?ans)
 =>
-(polar-question "The undead?" "undead" "Yes" "No"))
+(polar-question "The undead?" "undead" $?ans))
 
 
 (defrule undead_result_yes
